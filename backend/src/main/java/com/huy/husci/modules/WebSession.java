@@ -28,6 +28,7 @@ public class WebSession {
             String url = "https://student.husc.edu.vn/Account/Login";
             Connection.Response response = Jsoup.connect(url)
                     .method(Connection.Method.GET)
+                    .timeout(10000)
                     .execute();
             this.sessionCookies = response.cookies();
             Document loginPage = response.parse();
@@ -48,6 +49,7 @@ public class WebSession {
                     .method(Connection.Method.POST)
                     .data("loginID", student.getId())
                     .data("password", student.getPassword())
+                    .timeout(10000)
                     .data("__RequestVerificationToken", this.requestVerificationToken)
                     .cookies(this.sessionCookies)
                     .execute();
@@ -62,6 +64,7 @@ public class WebSession {
             Connection.Response response = Jsoup.connect(url)
                     .cookies(this.sessionCookies)
                     .method(Connection.Method.GET)
+                    .timeout(10000)
                     .execute();
             Document document = response.parse();
             this.sessionCookies = response.cookies();

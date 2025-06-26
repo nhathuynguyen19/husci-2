@@ -5,6 +5,7 @@ import com.huy.husci.model.Student;
 import com.huy.husci.response.ApiResponse;
 import com.huy.husci.response.ApiResponseCode;
 import com.huy.husci.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/students")
 public class StudentController extends BaseEntity {
+    @Autowired
     private final StudentService studentService;
 
     public StudentController(StudentService studentService) {
@@ -24,7 +26,7 @@ public class StudentController extends BaseEntity {
     @PostMapping
     public ApiResponse addStudent(@RequestBody Student student) {
         Map<String, Object> returnData = new LinkedHashMap<String, Object>();
-        student.setId(student.getId().toUpperCase());
+        student.setId(student.getId().toLowerCase());
         returnData.put("student", studentService.addStudent(student));
         return ApiResponse.success(returnData);
     }
@@ -32,18 +34,18 @@ public class StudentController extends BaseEntity {
     @GetMapping("/{id}")
     public ApiResponse getStudentById(@PathVariable String id) {
         Map<String, Object> returnData = new LinkedHashMap<String, Object>();
-        Student student = studentService.getStudentById(id.toUpperCase());
+        Student student = studentService.getStudentById(id.toLowerCase());
         if (student != null) {
             returnData.put("student", student);
             return ApiResponse.success(returnData);
         } else {
-            return ApiResponse.failMessage("Not Found Id: " + id.toUpperCase());
+            return ApiResponse.failMessage("Not Found Id Student: " + id.toLowerCase());
         }
     }
 
     @PutMapping("/{id}")
     public ApiResponse updateStudent(@PathVariable String id,@RequestBody Student studentUpdated) {
-        studentUpdated = studentService.updateStudent(id.toUpperCase(), studentUpdated);
+        studentUpdated = studentService.updateStudent(id.toLowerCase(), studentUpdated);
         Map<String, Object> returnData = new LinkedHashMap<String, Object>();
         returnData.put("student", studentUpdated);
         return ApiResponse.success(returnData);
@@ -51,7 +53,7 @@ public class StudentController extends BaseEntity {
 
     @DeleteMapping("/{id}")
     public ApiResponse deleteStudent(@PathVariable String id) {
-        studentService.deleteStudent(id.toUpperCase());
+        studentService.deleteStudent(id.toLowerCase());
         return ApiResponse.success();
     }
 
@@ -73,7 +75,7 @@ public class StudentController extends BaseEntity {
 
     @PutMapping("/{id}/logout")
     public ApiResponse logout(@PathVariable String id) {
-        Student student = studentService.logout(id.toUpperCase());
+        Student student = studentService.logout(id.toLowerCase());
         Map<String, Object> returnData = new LinkedHashMap<String, Object>();
         returnData.put("student", student);
         return ApiResponse.success(returnData);
@@ -81,7 +83,7 @@ public class StudentController extends BaseEntity {
 
     @PutMapping("/{id}/login")
     public ApiResponse login(@PathVariable String id) {
-        Student student = studentService.login(id.toUpperCase());
+        Student student = studentService.login(id.toLowerCase());
         Map<String, Object> returnData = new LinkedHashMap<String, Object>();
         returnData.put("student", student);
         return ApiResponse.success(returnData);

@@ -70,7 +70,7 @@ public class SessionInitializer implements CommandLineRunner {
     @EventListener
     public void handleStudentDeleted(StudentDeletedEvent event) {
         try {
-            Student student = event.getDeletetedStudent();
+            Student student = event.getStudent();
 
             webSessions.removeIf(ws -> ws.getId().equals(student.getId()));
             System.out.println("Remove Session For " + student.getId());
