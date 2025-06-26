@@ -20,7 +20,7 @@ public class AnnouncementService {
     private ApplicationEventPublisher publisher;
 
     public boolean isAnnouncement(String id) {
-        return announcementRepository.findById(id).isPresent();
+        return this.announcementRepository.findById(id).isPresent();
     }
 
     public AnnouncementService(AnnouncementRepository announcementRepository) {
@@ -30,7 +30,7 @@ public class AnnouncementService {
     public Announcement addAnnouncement(Announcement announcement) {
         if (!isAnnouncement(announcement.getId())) {
             Announcement saved = announcementRepository.save(announcement);
-            publisher.publishEvent(new AnnouncementCreatedEvent(saved));
+//            publisher.publishEvent(new AnnouncementCreatedEvent(saved));
             return saved;
         }
         return null;
@@ -47,6 +47,7 @@ public class AnnouncementService {
             existingAnnouncement.setTitle(announcement.getTitle());
             existingAnnouncement.setContent(announcement.getContent());
             existingAnnouncement.setUrl(announcement.getUrl());
+            existingAnnouncement.setDateCreate(announcement.getDateCreate());
             return announcementRepository.save(existingAnnouncement);
         } else {
             throw new IllegalArgumentException("Announcement with id: " + id + " not found!");
@@ -58,7 +59,7 @@ public class AnnouncementService {
         if (announcement.isPresent()) {
             Announcement deleted = announcement.get();
             announcementRepository.deleteById(id);
-            publisher.publishEvent(new AnnouncementDeletedEvent(deleted));
+//            publisher.publishEvent(new AnnouncementDeletedEvent(deleted));
         }
     }
 
