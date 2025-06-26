@@ -3,13 +3,13 @@ package com.huy.husci.event;
 import com.huy.husci.model.Student;
 
 public class StudentDeletedEvent {
-    private final Student deletetedStudent;
+    private final Student student;
 
-    public StudentDeletedEvent(Student deletetedStudent) {
-        this.deletetedStudent = deletetedStudent;
+    public StudentDeletedEvent(Student student) {
+        this.student = student;
     }
 
-    public Student getDeletetedStudent() {
-        return deletetedStudent;
+    public Student getStudent() {
+        return student;
     }
 }
