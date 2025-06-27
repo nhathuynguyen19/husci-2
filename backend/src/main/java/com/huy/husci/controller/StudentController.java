@@ -6,6 +6,7 @@ import com.huy.husci.response.ApiResponse;
 import com.huy.husci.response.ApiResponseCode;
 import com.huy.husci.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/students")
+@Profile("dev")
 public class StudentController extends BaseEntity {
     @Autowired
     private final StudentService studentService;
