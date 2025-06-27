@@ -5,6 +5,7 @@ import com.huy.husci.model.Student;
 import com.huy.husci.response.ApiResponse;
 import com.huy.husci.service.AnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/announcements")
+@Profile("dev")
 public class AnnouncementController {
     @Autowired
     private final AnnouncementService announcementService;
