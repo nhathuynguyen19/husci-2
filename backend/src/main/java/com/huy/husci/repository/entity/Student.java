@@ -1,4 +1,4 @@
-package com.huy.husci.model;
+package com.huy.husci.repository.entity;
 
 import lombok.Getter;
 import lombok.Setter;

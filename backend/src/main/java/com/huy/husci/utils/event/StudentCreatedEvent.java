@@ -1,6 +1,6 @@
-package com.huy.husci.event;
+package com.huy.husci.utils.event;
 
-import com.huy.husci.model.Student;
+import com.huy.husci.repository.entity.Student;
 
 public class StudentCreatedEvent {
     private final Student student;

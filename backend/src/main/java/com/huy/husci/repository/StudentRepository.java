@@ -1,8 +1,9 @@
 package com.huy.husci.repository;
 
-import com.huy.husci.model.Student;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+
+import com.huy.husci.repository.entity.Student;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.huy.husci.controller;
 
-import com.huy.husci.base.BaseEntity;
-import com.huy.husci.model.Student;
+import com.huy.husci.repository.entity.Student;
+import com.huy.husci.repository.entity.base.BaseEntity;
 import com.huy.husci.response.ApiResponse;
 import com.huy.husci.response.ApiResponseCode;
 import com.huy.husci.service.StudentService;

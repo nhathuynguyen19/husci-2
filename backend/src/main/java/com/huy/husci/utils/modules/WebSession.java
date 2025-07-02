@@ -1,12 +1,13 @@
-package com.huy.husci.modules;
+package com.huy.husci.utils.modules;
 
-import com.huy.husci.model.Student;
 import lombok.Getter;
 import lombok.Setter;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+
+import com.huy.husci.repository.entity.Student;
 
 import java.io.IOException;
 import java.util.Map;

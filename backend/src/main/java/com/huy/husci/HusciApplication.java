@@ -1,10 +1,11 @@
 package com.huy.husci;
 
-import com.huy.husci.modules.DotenvInitializer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.scheduling.annotation.EnableScheduling;
+
+import com.huy.husci.utils.modules.DotenvInitializer;
 
 @SpringBootApplication
 @EnableScheduling

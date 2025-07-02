@@ -1,4 +1,4 @@
-package com.huy.husci.modules;
+package com.huy.husci.utils.modules;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,7 +1,7 @@
 package com.huy.husci.controller;
 
-import com.huy.husci.model.Announcement;
-import com.huy.husci.model.Student;
+import com.huy.husci.repository.entity.Announcement;
+import com.huy.husci.repository.entity.Student;
 import com.huy.husci.response.ApiResponse;
 import com.huy.husci.service.AnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
