@@ -1,4 +1,4 @@
-package com.huy.husci.modules;
+package com.huy.husci.utils.modules;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

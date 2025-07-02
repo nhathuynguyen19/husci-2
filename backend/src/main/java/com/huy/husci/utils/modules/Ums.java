@@ -1,11 +1,12 @@
-package com.huy.husci.modules;
+package com.huy.husci.utils.modules;
 
-import com.huy.husci.model.Announcement;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import com.huy.husci.repository.entity.Announcement;
 
 import java.io.IOException;
 import java.util.ArrayList;

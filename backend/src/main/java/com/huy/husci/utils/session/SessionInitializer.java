@@ -1,14 +1,15 @@
-package com.huy.husci.session;
+package com.huy.husci.utils.session;
 
-import com.huy.husci.event.StudentCreatedEvent;
-import com.huy.husci.event.StudentDeletedEvent;
-import com.huy.husci.model.Announcement;
-import com.huy.husci.model.Student;
-import com.huy.husci.modules.DiscordBroadcaster;
-import com.huy.husci.modules.Ums;
-import com.huy.husci.modules.WebSession;
+import com.huy.husci.repository.entity.Announcement;
+import com.huy.husci.repository.entity.Student;
 import com.huy.husci.service.AnnouncementService;
 import com.huy.husci.service.StudentService;
+import com.huy.husci.utils.event.StudentCreatedEvent;
+import com.huy.husci.utils.event.StudentDeletedEvent;
+import com.huy.husci.utils.modules.DiscordBroadcaster;
+import com.huy.husci.utils.modules.Ums;
+import com.huy.husci.utils.modules.WebSession;
+
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

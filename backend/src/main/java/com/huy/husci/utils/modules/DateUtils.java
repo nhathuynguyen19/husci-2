@@ -1,4 +1,4 @@
-package com.huy.husci.modules;
+package com.huy.husci.utils.modules;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

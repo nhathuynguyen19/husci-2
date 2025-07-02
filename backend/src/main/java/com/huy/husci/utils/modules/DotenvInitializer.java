@@ -1,4 +1,4 @@
-package com.huy.husci.modules;
+package com.huy.husci.utils.modules;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import io.github.cdimascio.dotenv.DotenvEntry;

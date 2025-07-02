@@ -1,9 +1,10 @@
 package com.huy.husci.service;
 
-import com.huy.husci.event.StudentCreatedEvent;
-import com.huy.husci.event.StudentDeletedEvent;
-import com.huy.husci.model.Student;
 import com.huy.husci.repository.StudentRepository;
+import com.huy.husci.repository.entity.Student;
+import com.huy.husci.utils.event.StudentCreatedEvent;
+import com.huy.husci.utils.event.StudentDeletedEvent;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;

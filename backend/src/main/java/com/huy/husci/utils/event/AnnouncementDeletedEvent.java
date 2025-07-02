@@ -1,6 +1,6 @@
-package com.huy.husci.event;
+package com.huy.husci.utils.event;
 
-import com.huy.husci.model.Announcement;
+import com.huy.husci.repository.entity.Announcement;
 
 public class AnnouncementDeletedEvent {
     private final Announcement announcement;
