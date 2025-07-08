@@ -14,7 +14,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/announcements")
-@Profile("dev")
 public class AnnouncementController {
     @Autowired
     private final AnnouncementService announcementService;
@@ -33,28 +32,30 @@ public class AnnouncementController {
     }
 
     // add
-    @PostMapping
-    public ApiResponse addAnnouncement(@RequestBody Announcement announcement) {
-        Map<String, Object> returnData = new LinkedHashMap<String, Object>();
-        announcement.setId(announcement.getId().toLowerCase());
-        returnData.put("announcement", announcementService.addAnnouncement(announcement));
-        return ApiResponse.success(returnData);
-    }
+//    @PostMapping
+//    public ApiResponse addAnnouncement(@RequestBody Announcement announcement) {
+//        Map<String, Object> returnData = new LinkedHashMap<String, Object>();
+//        announcement.setId(announcement.getId().toLowerCase());
+//        returnData.put("announcement", announcementService.addAnnouncement(announcement));
+//        return ApiResponse.success(returnData);
+//    }
 
     // update by id
-    @PutMapping("/{id}")
-    public ApiResponse updateAnnouncement(@PathVariable String id,@RequestBody Announcement announcement) {
-        announcement = announcementService.updateAnnouncement(id.toLowerCase(), announcement);
-        Map<String, Object> returnData = new LinkedHashMap<String, Object>();
-        returnData.put("announcement", announcement);
-        return ApiResponse.success(returnData);
-    }
+//    @PutMapping("/{id}")
+//    public ApiResponse updateAnnouncement(@PathVariable String id,@RequestBody Announcement announcement) {
+//        announcement = announcementService.updateAnnouncement(id.toLowerCase(), announcement);
+//        Map<String, Object> returnData = new LinkedHashMap<String, Object>();
+//        returnData.put("announcement", announcement);
+//        return ApiResponse.success(returnData);
+//    }
+
     // delete by id
-    @DeleteMapping("/{id}")
-    public ApiResponse deleteAnnouncement(@PathVariable String id) {
-        announcementService.deleteAnnouncement(id.toLowerCase());
-        return ApiResponse.success();
-    }
+//    @DeleteMapping("/{id}")
+//    public ApiResponse deleteAnnouncement(@PathVariable String id) {
+//        announcementService.deleteAnnouncement(id.toLowerCase());
+//        return ApiResponse.success();
+//    }
+
     // get by id
     @GetMapping("/{id}")
     public ApiResponse getAnnouncementById(@PathVariable String id) {
