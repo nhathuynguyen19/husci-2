@@ -1,11 +1,9 @@
 package com.huy.husci.controller;
 
 import com.huy.husci.repository.entity.Announcement;
-import com.huy.husci.repository.entity.Student;
 import com.huy.husci.response.ApiResponse;
 import com.huy.husci.service.AnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
@@ -25,9 +23,9 @@ public class AnnouncementController {
     // get all
     @GetMapping
     public ApiResponse getAllAnnouncements() {
-        List<Announcement> announcements = announcementService.getAllAnnouncements();
+        List<Announcement> announcementEntities = announcementService.getAllAnnouncements();
         Map<String, Object> returnData = new LinkedHashMap<String, Object>();
-        returnData.put("announcements", announcements);
+        returnData.put("announcements", announcementEntities);
         return ApiResponse.success(returnData);
     }
 

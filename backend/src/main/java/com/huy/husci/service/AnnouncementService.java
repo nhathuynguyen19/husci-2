@@ -2,8 +2,6 @@ package com.huy.husci.service;
 
 import com.huy.husci.repository.AnnouncementRepository;
 import com.huy.husci.repository.entity.Announcement;
-import com.huy.husci.utils.event.AnnouncementCreatedEvent;
-import com.huy.husci.utils.event.AnnouncementDeletedEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;

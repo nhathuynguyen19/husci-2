@@ -6,7 +6,6 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 @Getter
@@ -15,7 +14,8 @@ import java.util.Date;
 @Document(collection = "announcements")
 public class Announcement {
     @Id
-    private String id;
+    private Long id;
+
     private String title;
     private String content;
     private String url;
@@ -23,7 +23,7 @@ public class Announcement {
 
     public Announcement() {}
 
-    public Announcement(String id, String title, String content, String url, Date dateCreate) {
+    public Announcement(Long id, String title, String content, String url, Date dateCreate) {
         this.id = id;
         this.title = title;
         this.content = content;

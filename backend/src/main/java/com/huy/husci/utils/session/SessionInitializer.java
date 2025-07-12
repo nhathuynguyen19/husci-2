@@ -91,9 +91,9 @@ public class SessionInitializer implements CommandLineRunner {
 
     @Scheduled(fixedRate = 10000)
     public void checkAnnouncementsEvery10Seconds() {
-        List<Announcement> announcements = Ums.fetchAnnouncementsOnPage();
+        List<Announcement> announcementEntities = Ums.fetchAnnouncementsOnPage();
 
-        for (Announcement announcement : announcements) {
+        for (Announcement announcement : announcementEntities) {
             if (!announcementService.isAnnouncement(announcement.getId())) {
                 try {
                     announcementService.addAnnouncement(announcement);

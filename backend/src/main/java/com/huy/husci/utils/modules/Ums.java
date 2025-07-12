@@ -52,7 +52,7 @@ public class Ums {
     }
 
     public static List<Announcement> fetchAnnouncementsOnPage() {
-        List<Announcement> announcements = new ArrayList<>();
+        List<Announcement> announcementEntities = new ArrayList<>();
         try {
             Document document = fetch();
             Element element = document.selectFirst("div.container-fluid");
@@ -62,25 +62,25 @@ public class Ums {
             }
 
             for (Element e : elements) {
-                String id;
+                Long id;
                 String title;
                 String content;
                 String url;
                 Date dateCreate;
 
-                id = cleanId(Objects.requireNonNull(e.selectFirst("div > p > a")).attr("href"));
+                id = Long.parseLong(cleanId(Objects.requireNonNull(e.selectFirst("div > p > a")).attr("href")));
                 title = e.select("div > p > a").text();
                 content = e.select("div > p").get(1).text();
                 url = "https://ums.husc.edu.vn/" + e.select("div > p > a").attr("href");
                 dateCreate = DateUtils.parseVietnamTimeToDate(e.select("div > p > small").text());
 
                 Announcement announcement = new Announcement(id, title, content, url, dateCreate);
-                announcements.add(announcement);
+                announcementEntities.add(announcement);
             }
-            return announcements;
+            return announcementEntities;
         } catch (Exception e) {
             System.err.println("Lỗi khi lấy thông báo từ web" + e.getMessage());
         }
-        return announcements;
+        return announcementEntities;
     }
 }

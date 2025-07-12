@@ -9,21 +9,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter
 @ToString
-//asdfas
 @Document(collection = "students")
 public class Student {
     @Id
-    private String id;
+    private Long id;
 
+    private String uid;
     private String name;
-
     private String password;
-
     private Boolean status;
-
     public Student() {}
 
-    public Student(String id, String name, String password, Boolean status) {
+    public Student(Long id, String name, String password, Boolean status) {
         this.id = id;
         this.name = name;
         this.password = password;
