@@ -4,4 +4,4 @@ fastapi==0.116.1
 pymongo==4.13.2
 python-dotenv==1.1.1
 Requests==2.32.4
-uvicorn
+uvicorn[standard]
