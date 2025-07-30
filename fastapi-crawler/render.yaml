@@ -1,9 +1,0 @@
-services:
-  - type: web
-    name: fastapi-crawler
-    runtime: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "uvicorn main:app --host 0.0.0.0 --port 10000"
-    envVars:
-      - key: MONGODB_URI
-        value: your-mongo-uri
