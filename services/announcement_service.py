@@ -6,12 +6,16 @@ from modules.crawler import announcement_crawler
 from repositories.announcement_repo import AnnouncementRepository
 from models.announcement import Announcement, AnnouncementInput
 from typing import List, Optional
-from utils.mongo import database
+from utils.mongo import database_primary, database_secondary
 import traceback
+from utils.globals import testing
 
 class AnnouncementService:
     def __init__(self):
-        self.repo = AnnouncementRepository(database)
+        if testing:
+            self.repo = AnnouncementRepository(database_secondary)
+        else:
+            self.repo = AnnouncementRepository(database_primary)
     
     def get_all(self) -> List[Announcement]:
         return [Announcement.from_dict(ann_dict) for ann_dict in self.repo.find_all()]

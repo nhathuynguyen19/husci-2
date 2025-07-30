@@ -3,6 +3,7 @@
 
 ### other ###
 .env
+.idea
 
 # python
 __pycache__/
