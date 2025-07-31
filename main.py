@@ -107,7 +107,9 @@ async def on_ready():
     print(f"[BOT] Ready as {bot.user}")
     if startup_event:
         startup_event.set()
-    await bot.tree.sync()
+    if not getattr(bot, "synced", False):
+        await bot.tree.sync()
+        bot.synced = True
 
 def start_background_thread():
     thread = threading.Thread(target=announcement_watch.watch_changes, args=(bot,), daemon=True)
@@ -117,7 +119,7 @@ def start_background_thread():
 async def on_startup():
     global startup_event, app_ready
     startup_event = asyncio.Event()
-    asyncio.create_task(discord_bot.start_up(bot))
+    asyncio.create_task(discord_bot.start_discord_bot(bot))
     start_background_thread()
     await startup_event.wait()
     app_ready = True
