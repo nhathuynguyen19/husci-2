@@ -5,13 +5,12 @@ from fastapi import FastAPI
 import threading
 from dotenv import load_dotenv
 import asyncio
-from routers import announcement_router
 from services.announcement_service import AnnouncementService
 from services.member_service import MemberService
 from services.student_service import StudentService
 from utils.discordInit import DiscordBot
 from modules.watch import announcement_watch
-from discord.ext import commands
+from discord.ext import commands, tasks
 import discord
 from utils.http import user_login
 from models.student import Student
@@ -28,12 +27,8 @@ import uvicorn
 # uvicorn main:app --port 10000 --reload
 
 load_dotenv()
-app = FastAPI()
-app.include_router(announcement_router.router)
 discord_bot = DiscordBot()
 bot: commands.Bot = discord_bot.create_bot(prefix="/")
-app_ready = False
-startup_event = None
 followup_messages = FollowUpSend()
 
 announcement_service = AnnouncementService()
@@ -104,28 +99,20 @@ async def login(ctx: nextcord.Interaction, student_id: str, password: str):
     except Exception as e:
         traceback.print_exc()
 
-@bot.event
-async def on_ready():
-    print(f"[BOT] Ready as {bot.user}")
-    if startup_event:
-        startup_event.set()
-    if not getattr(bot, "synced", False):
-        await bot.tree.sync()
-        bot.synced = True
-
 def start_background_thread():
     thread = threading.Thread(target=announcement_watch.watch_changes, args=(bot,), daemon=True)
     thread.start()
-    
-@app.on_event("startup")
-async def on_startup():
-    global startup_event, app_ready
-    startup_event = asyncio.Event()
-    asyncio.create_task(discord_bot.start_discord_bot(bot))
-    start_background_thread()
-    await startup_event.wait()
-    app_ready = True
-    
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))
-    uvicorn.run("main:app", host="0.0.0.0", port=port)
+
+@tasks.loop(minutes=10)
+async def ten_minutes():
+    await announcement_service.crawl_announcements()
+
+@bot.event
+async def on_ready():
+    print(f"[BOT] Ready as {bot.user}")
+    if not getattr(bot, "synced", False):
+        await bot.tree.sync()
+        bot.synced = True
+    ten_minutes.start()
+
+discord_bot.start_discord_bot(bot)

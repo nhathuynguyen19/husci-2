@@ -11,9 +11,9 @@ class DiscordBot:
         else:
             self.discord_token = os.getenv("DISCORD_TOKEN_SECONDARY")
         
-    async def start_discord_bot(self, bot: commands.Bot):
+    def start_discord_bot(self, bot: commands.Bot):
         try:
-            await bot.start(self.discord_token)
+            bot.run(self.discord_token)
         except Exception as e:
             print("[ERROR] Discord bot failed:", e)
 
