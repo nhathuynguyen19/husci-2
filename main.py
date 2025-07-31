@@ -22,6 +22,8 @@ from modules.message.announcement import announcement_create
 from utils.followup_send import FollowUpSend
 from utils.utils_function import UtilsFunction
 from nextcord import Interaction
+import os
+import uvicorn
 
 # uvicorn main:app --port 10000 --reload
 
@@ -124,4 +126,6 @@ async def on_startup():
     await startup_event.wait()
     app_ready = True
     
-
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
