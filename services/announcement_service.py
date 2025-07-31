@@ -1,7 +1,5 @@
 from dataclasses import asdict
 from datetime import datetime
-
-from fastapi import HTTPException
 from modules.crawler import announcement_crawler
 from repositories.announcement_repo import AnnouncementRepository
 from models.announcement import Announcement, AnnouncementInput
