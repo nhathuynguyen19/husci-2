@@ -10,6 +10,8 @@ from services.student_service import StudentService
 from utils.discordInit import DiscordBot
 from modules.watch import announcement_watch
 from discord.ext import commands, tasks
+from fastapi import FastAPI
+import uvicorn
 import discord
 from utils.http import user_login
 from models.student import Student
@@ -23,6 +25,16 @@ from nextcord import Interaction
 import os
 
 # uvicorn main:app --port 10000 --reload
+
+app = FastAPI()
+
+@app.get("/")
+async def root():
+    return {"status": "running"}
+
+def run_web():
+    port = int(os.environ.get("PORT", 10000))  # Render yêu cầu phải dùng PORT env
+    uvicorn.run(app, host="0.0.0.0", port=port)
 
 load_dotenv()
 discord_bot = DiscordBot()
@@ -113,4 +125,5 @@ async def on_ready():
         bot.synced = True
     ten_minutes.start()
 
+threading.Thread(target=run_web, daemon=True).start()
 discord_bot.start_discord_bot(bot)
