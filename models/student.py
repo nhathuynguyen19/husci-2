@@ -3,7 +3,6 @@ from datetime import datetime
 from typing import Optional
 from utils.utils_function import UtilsFunction
 from bson import ObjectId
-from pydantic.v1.utils import to_lower_camel
 
 
 @dataclass
