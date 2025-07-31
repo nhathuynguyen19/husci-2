@@ -43,7 +43,7 @@ class AnnouncementService:
     def delete(self, _id: str) -> bool:
         return self.repo.delete(_id)
 
-    def crawl_announcements(self) -> List[dict]:
+    async def crawl_announcements(self) -> List[dict]:
         rs = []
         for ann_dict in [asdict(ann) for ann in announcement_crawler.crawl()]:
             if not self.exists(ann_dict.get("title"), ann_dict.get("date_create")):
