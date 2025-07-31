@@ -1,7 +1,6 @@
 import traceback
 
 import nextcord
-from fastapi import FastAPI
 import threading
 from dotenv import load_dotenv
 import asyncio
@@ -22,7 +21,6 @@ from utils.followup_send import FollowUpSend
 from utils.utils_function import UtilsFunction
 from nextcord import Interaction
 import os
-import uvicorn
 
 # uvicorn main:app --port 10000 --reload
 
