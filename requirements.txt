@@ -5,3 +5,4 @@ pymongo==4.13.2
 python-dotenv==1.1.1
 Requests==2.32.4
 uvicorn[standard]
+aiohttp~=3.12.15

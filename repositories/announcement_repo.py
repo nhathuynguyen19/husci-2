@@ -3,6 +3,9 @@ from bson import ObjectId
 from datetime import datetime
 from pymongo.database import Database
 
+from models.announcement import Announcement
+
+
 class AnnouncementRepository:
     def __init__(self, database: Database):
         self.collection = database["announcements"]
@@ -31,3 +34,6 @@ class AnnouncementRepository:
     def delete(self, _id: str) -> bool:
         result = self.collection.delete_one({"_id": ObjectId(_id)})
         return result.deleted_count > 0
+
+    def find_by_date_create_largest(self) -> Optional[dict]:
+        return self.collection.find_one(sort=[("date_create", -1)])

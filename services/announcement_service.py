@@ -50,3 +50,6 @@ class AnnouncementService:
                 self.create(AnnouncementInput.from_dict(ann_dict))
                 rs.append(ann_dict)
         return rs
+
+    def get_by_date_create_largest(self) -> Optional[Announcement]:
+        return Announcement.from_dict(self.repo.find_by_date_create_largest())

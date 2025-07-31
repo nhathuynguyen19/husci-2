@@ -12,7 +12,9 @@ class AnnouncementInput:
     date_create: datetime
     
     @classmethod
-    def from_dict(cls, data: dict) -> "AnnouncementInput":
+    def from_dict(cls, data: dict) -> Optional["AnnouncementInput"]:
+        if data is None:
+            return None
         return cls(
             title=data.get("title"),
             content=data.get("content"),
@@ -32,13 +34,15 @@ class Announcement:
     date_create: datetime
     _id: Optional[ObjectId] = None
     
-    def to_dict(self):
+    def to_dict(self) -> Optional[dict]:
         data = asdict(self)
         data["_id"] = str(self._id)
         return data
     
     @classmethod
-    def from_dict(cls, data: dict) -> "Announcement":
+    def from_dict(cls, data: dict) -> Optional["Announcement"]:
+        if data is None:
+            return None
         return cls(
             _id=ObjectId(data["_id"]) if "_id" in data and data["_id"] else None,
             title=data.get("title"),
