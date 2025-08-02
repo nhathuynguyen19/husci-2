@@ -14,8 +14,8 @@ class StudentService:
     def get_by_id(self, student_id: str) -> Optional[Student]:
         return Student.from_dict(self.repo.find_by_id(student_id))
 
-    async def create(self, data: Student) -> str:
+    def create(self, data: Student) -> str:
         return self.repo.create(Student.to_dict(data))
 
-    async def update(self, student_id: str, student: Student) -> bool:
+    def update(self, student_id: str, student: Student) -> bool:
         return self.repo.update(student_id, Student.to_dict(student))
