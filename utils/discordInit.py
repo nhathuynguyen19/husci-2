@@ -10,12 +10,6 @@ class DiscordBot:
             self.discord_token = os.getenv("DISCORD_TOKEN_PRIMARY")
         else:
             self.discord_token = os.getenv("DISCORD_TOKEN_SECONDARY")
-        
-    def start_discord_bot(self, bot: commands.Bot):
-        try:
-            bot.run(self.discord_token)
-        except Exception as e:
-            print("[ERROR] Discord bot failed:", e)
 
     def create_bot(self, prefix="/"):
         intents = discord.Intents.default()
