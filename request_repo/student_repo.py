@@ -15,7 +15,7 @@ class StudentRepository:
         result = self.collection.insert_one(data)
         return str(result.inserted_id)
 
-    def update(self, _id: str, data: dict) -> bool:
+    def update(self, student_id: str, data: dict) -> bool:
         data.pop("_id", None)
-        result = self.collection.update_one({"_id": ObjectId(data["_id"])}, {"$set": data})
+        result = self.collection.update_one({"student_id": student_id}, {"$set": data})
         return result.modified_count > 0

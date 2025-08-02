@@ -25,7 +25,7 @@ class Member:
         if data is None:
             return None
         return cls (
-            member_id = UtilsFunction.to_lower(data.get("member_id")),
+            member_id = int(data.get("member_id")),
             username = data.get("username"),
             student_id = UtilsFunction.to_lower(data.get("student_id")),
             _id = data.get("_id")

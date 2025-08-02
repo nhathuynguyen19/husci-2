@@ -1,9 +1,9 @@
-import nextcord
 import threading
 from dotenv import load_dotenv
 import asyncio
 from services.announcement_service import AnnouncementService
 from services.member_service import MemberService
+from services.request_service import RequestService
 from services.student_service import StudentService
 from utils.discordInit import DiscordBot
 from modules.watch import announcement_watch
@@ -26,15 +26,20 @@ followup_messages = FollowUpSend()
 announcement_service = AnnouncementService()
 student_service = StudentService()
 member_service = MemberService()
-commands_discord_bot = Commands(announcement_service, student_service, member_service, followup_messages)
+request_service = RequestService()
+commands_discord_bot = Commands(announcement_service, student_service, member_service, request_service, followup_messages)
 
 @bot.tree.command(name="new", description="Xem thông báo mới nhất")
-async def new(ctx: nextcord.Interaction) -> None:
+async def new(ctx) -> None:
     await commands_discord_bot.new_noti(ctx)
 
 @bot.tree.command(name="login", description="Đăng nhập")
-async def login(ctx: nextcord.Interaction, student_id: str, password: str):
+async def login(ctx, student_id: str, password: str):
     await commands_discord_bot.login(ctx, student_id, password)
+
+@bot.tree.command(name="logout", description="Đăng xuất")
+async def logout(ctx):
+    await commands_discord_bot.logout(ctx)
 
 def start_background_thread():
     thread = threading.Thread(target=announcement_watch.watch_changes, args=(bot,), daemon=True)

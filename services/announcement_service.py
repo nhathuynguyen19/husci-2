@@ -1,7 +1,7 @@
 from dataclasses import asdict
 from datetime import datetime
 from modules.crawler import announcement_crawler
-from repositories.announcement_repo import AnnouncementRepository
+from request_repo.announcement_repo import AnnouncementRepository
 from models.announcement import Announcement, AnnouncementInput
 from typing import List, Optional
 from utils.mongo import database_primary, database_secondary

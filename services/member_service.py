@@ -1,7 +1,7 @@
 from typing import Optional
 from models.member import Member
 from models.student import Student
-from repositories.member_repo import MemberRepository
+from request_repo.member_repo import MemberRepository
 from utils.mongo import database_primary, database_secondary
 from utils.globals import testing
 class MemberService:
