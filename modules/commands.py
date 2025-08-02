@@ -27,7 +27,9 @@ class Commands:
                 if not ctx.response.is_done():
                     await ctx.response.defer(ephemeral=False, thinking=True)
             except Exception as e:
+                print("Lỗi khi xử lý lệnh /new:")
                 traceback.print_exc()
+                await ctx.edit_original_response(content="❌ Lỗi hệ thống vui lòng thử lại sau!")
             message = await announcement_create(await self.announcement_service.get_by_date_create_largest())
             if message is not None:
                 await ctx.edit_original_response(content=message)
@@ -45,7 +47,9 @@ class Commands:
                 if not ctx.response.is_done():
                     await ctx.response.defer(ephemeral=True, thinking=True)
             except Exception as e:
+                print("Lỗi khi xử lý lệnh /login:")
                 traceback.print_exc()
+                await ctx.edit_original_response(content="❌ Lỗi hệ thống vui lòng thử lại sau!")
             student = await self.student_service.get_by_id(student_id)
             if student:
                 if password == student.password:
@@ -82,4 +86,6 @@ class Commands:
                 else:
                     await ctx.followup.send(self.followup_messages.failure[2])
         except Exception as e:
+            print("Lỗi khi xử lý lệnh /login:")
             traceback.print_exc()
+            await ctx.edit_original_response(content="❌ Lỗi hệ thống vui lòng thử lại sau!")
