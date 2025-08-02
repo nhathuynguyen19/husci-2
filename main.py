@@ -42,6 +42,7 @@ def start_background_thread():
 
 @tasks.loop(minutes=10)
 async def ten_minutes():
+    print("ten minutes started")
     await announcement_service.crawl_announcements()
 
 async def start_discord():
@@ -65,6 +66,7 @@ async def on_ready():
         await bot.tree.sync()
         bot.synced = True
     ten_minutes.start()
+    start_background_thread()
 
 if __name__ == "__main__":
     asyncio.run(main())
