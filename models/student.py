@@ -23,6 +23,7 @@ class Student:
     id_card_place_of_issue: Optional[str] = None
     phone_number: Optional[str] = None
     email: Optional[str] = None
+    cookies_id: Optional[ObjectId] = None
     _id: Optional[ObjectId] = None
 
     def to_dict(self) -> Optional[dict]:
@@ -53,5 +54,6 @@ class Student:
             id_card_place_of_issue = data.get("id_card_place_of_issue"),
             phone_number = data.get("phone_number"),
             email = data.get("email"),
+            cookies_id = data.get("cookies_id"),
             _id = data.get("_id"),
         )

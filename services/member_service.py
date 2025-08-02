@@ -14,5 +14,11 @@ class MemberService:
     def get_by_id(self, member_id: int) -> Optional[Member]:
         return Member.from_dict(self.repo.find_by_id(member_id))
 
-    async def create(self, data: Member) -> str:
+    def get_by_student_id(self, student_id: str) -> Optional[Member]:
+        return Member.from_dict(self.repo.find_by_student_id(student_id))
+
+    def create(self, data: Member) -> str:
         return str(self.repo.create(Member.to_dict(data)))
+
+    def update(self, member_id: int, member: Member) -> bool:
+        return self.repo.update(member_id, Member.to_dict(member))

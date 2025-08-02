@@ -4,7 +4,7 @@ class FollowUpSend:
     def __init__(self):
         self.success = [
             "*Đăng nhập thành công!*",
-            "*Bạn đã đăng nhập rồi!*",
+            "*Đã đăng nhập!*",
             "*Đã đăng xuất!*",
         ]
         self.failure = [

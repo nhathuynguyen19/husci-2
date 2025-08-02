@@ -2,6 +2,7 @@ import threading
 from dotenv import load_dotenv
 import asyncio
 from services.announcement_service import AnnouncementService
+from services.cookies_service import CookiesService
 from services.member_service import MemberService
 from services.request_service import RequestService
 from services.student_service import StudentService
@@ -26,8 +27,14 @@ followup_messages = FollowUpSend()
 announcement_service = AnnouncementService()
 student_service = StudentService()
 member_service = MemberService()
+cookies_service = CookiesService()
 request_service = RequestService()
-commands_discord_bot = Commands(announcement_service, student_service, member_service, request_service, followup_messages)
+commands_discord_bot = Commands(announcement_service,
+                                student_service,
+                                member_service,
+                                request_service,
+                                cookies_service,
+                                followup_messages)
 
 @bot.tree.command(name="new", description="Xem thông báo mới nhất")
 async def new(ctx) -> None:
