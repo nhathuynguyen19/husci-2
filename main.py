@@ -24,10 +24,13 @@ import traceback
 try:
     app = FastAPI()
     time_loop = None
+    time_sleep = None
     if testing:
         time_loop = 10
+        time_sleep = 2
     else:
         time_loop = 10 * 60
+        time_sleep = 15
     load_dotenv()
     discord_bot = DiscordBot()
     bot: commands.Bot = discord_bot.create_bot(prefix="/")
@@ -76,11 +79,11 @@ try:
         await announcement_service.compare_announcements()
         await api_crawler.student_loop()
 
-    async def start_background_thread():
-        thread1 = threading.Thread(target=watch_stream.watch_announcement_change, args=(bot, announcement_service, ), daemon=True)
-        thread2 = threading.Thread(target=watch_stream.watch_study_history_change, args=(bot, study_history_service, member_service, ), daemon=True)
-        thread1.start()
-        thread2.start()
+
+    async def start_background_tasks():
+        loop = asyncio.get_event_loop()
+        loop.run_in_executor(None, watch_stream.watch_announcement_change, bot, announcement_service)
+        loop.run_in_executor(None, watch_stream.watch_study_history_change, bot, study_history_service, member_service)
 
     async def start_discord():
         await bot.start(discord_bot.discord_token)
@@ -91,11 +94,12 @@ try:
         await server.serve()
 
     async def main():
+
         await asyncio.gather(
             start_discord(),
-            start_fastapi(),
-            start_background_thread()
+            start_fastapi()
         )
+
 
     @bot.event
     async def on_ready():
@@ -103,6 +107,8 @@ try:
         if not getattr(bot, "synced", False):
             await bot.tree.sync()
             bot.synced = True
+        await start_background_tasks()
+        await asyncio.sleep(10)
         crawler_loop.start()
         print("crawl loops started")
 
