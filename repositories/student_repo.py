@@ -1,4 +1,3 @@
-from bson import ObjectId
 from pymongo.database import Database
 from typing import Optional, List
 
