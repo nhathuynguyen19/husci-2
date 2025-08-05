@@ -1,24 +1,13 @@
 import asyncio
 import os
+from aiohttp import web
 
-import uvicorn
-from dotenv import load_dotenv
-from fastapi import FastAPI
+async def head_handler(request):
+    return web.Response(status=200)
 
-app = FastAPI()
-load_dotenv()
-
-@app.head("/")
-async def root():
-    return {"status": "running"}
+app = web.Application()
+app.router.add_head("/", head_handler)
 
 if __name__ == "__main__":
-    asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy()),
-    uvicorn.run(
-        "main_api:app",
-        host="0.0.0.0",
-        port=int(os.getenv("PORT", 10000)),
-        log_level="info",
-        loop="asyncio",
-        workers=1
-    )
+    asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
+    web.run_app(app, host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
