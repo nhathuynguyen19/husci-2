@@ -114,17 +114,16 @@ async def main():
 
 async def head_handler(request):
     return web.Response(status=200)
+
+app = web.Application()
+app.router.add_head("/", head_handler)
 #
 async def start_aiohttp():
-    app = web.Application()
-    app.router.add_head("/", head_handler)
-
     runner = web.AppRunner(app)
     await runner.setup()
     port = int(os.environ.get("PORT", 10000))
     site = web.TCPSite(runner, host="0.0.0.0", port=port)
     await site.start()
-
     print(f"✅ aiohttp server running at http://0.0.0.0:{port}")
 
 async def start_discord():
