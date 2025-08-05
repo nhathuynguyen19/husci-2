@@ -85,27 +85,27 @@ async def scores(ctx):
 #     thread = threading.Thread(target=watch_stream.watch_study_history_change, args=(bot, study_history_service, member_service, ), daemon=True)
 #     thread.start()
 #
-async def start_discord():
-    try:
-        print("⏳ Starting Discord bot...")
-        await bot.start(discord_token)
-
-    except discord.errors.HTTPException as e:
-        print("🚫 HTTPException:", e)
-        if e.status == 429:  # Rate limit
-            print("🔁 BLOCKED BY RATE LIMITS — Restarting...")
-            await bot.close()  # Đóng bot để giải phóng resource
-            os.system('kill 1')  # Chỉ dùng nếu đang chạy trong Docker
-        else:
-            raise
-
-    except Exception as e:
-        print("🔥 Unhandled exception:", e)
-        await bot.close()
-        raise
+# async def start_discord():
+#     try:
+#         print("⏳ Starting Discord bot...")
+#         await bot.start(discord_token)
 #
-async def main():
-    await start_discord()
+#     except discord.errors.HTTPException as e:
+#         print("🚫 HTTPException:", e)
+#         if e.status == 429:  # Rate limit
+#             print("🔁 BLOCKED BY RATE LIMITS — Restarting...")
+#             await bot.close()  # Đóng bot để giải phóng resource
+#             os.system('kill 1')  # Chỉ dùng nếu đang chạy trong Docker
+#         else:
+#             raise
+#
+#     except Exception as e:
+#         print("🔥 Unhandled exception:", e)
+#         await bot.close()
+#         raise
+# #
+# async def main():
+#     bot.run(discord_token)
 #
 @bot.event
 async def on_ready():
@@ -120,5 +120,4 @@ async def on_ready():
     # print("crawl loops started")
 #
 if __name__ == "__main__":
-    asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
-    asyncio.run(main())
+    bot.run(discord_token)
