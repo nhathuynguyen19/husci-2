@@ -18,7 +18,7 @@ from services.member_service import MemberService
 from services.request_service import RequestService
 from services.student_service import StudentService
 from services.study_history_service import StudyHistoryService
-from utils.discordInit import DiscordBot
+from utils.discordInit import create_bot
 from utils.followup_send import FollowUpSend
 from utils.globals import testing
 from utils.http import HTTPHandler
@@ -26,15 +26,17 @@ from utils.http import HTTPHandler
 app = FastAPI()
 time_loop = None
 time_sleep = None
+discord_token = None
 if testing:
     time_loop = 10
     time_sleep = 2
+    discord_token = os.getenv("DISCORD_TOKEN_SECONDARY")
 else:
     time_loop = 10 * 60
     time_sleep = 15
+    discord_token = os.getenv("DISCORD_TOKEN_PRIMARY")
 load_dotenv()
-discord_bot = DiscordBot()
-bot: commands.Bot = discord_bot.create_bot(prefix="/")
+bot: commands.Bot = create_bot()
 followup_messages = FollowUpSend()
 announcement_service = AnnouncementService()
 student_service = StudentService()
@@ -92,7 +94,7 @@ async def scores(ctx):
 async def start_discord():
     try:
         print("⏳ Starting Discord bot...")
-        await bot.start(discord_bot.discord_token)
+        await bot.start(discord_token)
 
     except discord.errors.HTTPException as e:
         print("🚫 HTTPException:", e)
