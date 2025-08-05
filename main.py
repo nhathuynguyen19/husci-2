@@ -80,9 +80,8 @@ async def scores(ctx):
 
 @tasks.loop(seconds=time_loop)
 async def crawler_loop():
-    print("crawler loop")
-    # await announcement_service.compare_announcements()
-    # await api_crawler.student_loop()
+    await announcement_service.compare_announcements()
+    await api_crawler.student_loop()
 
 
 def bg_thread_1():
@@ -118,8 +117,8 @@ async def on_ready():
     if not getattr(bot, "synced", False):
         await bot.tree.sync()
         bot.synced = True
-    bg_thread_1()
-    bg_thread_2()
+    # bg_thread_1()
+    # bg_thread_2()
     await asyncio.sleep(time_sleep)
     crawler_loop.start()
     print("crawl loops started")
