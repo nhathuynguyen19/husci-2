@@ -12,5 +12,6 @@ class RequestRepository:
         result = self.collection.insert_one(data)
         return result.inserted_id
 
-    def update(self, _id: str, successful: bool, error: Optional[str] = None, full_error : Optional[str] = None) -> Optional[ObjectId]:
+    def update(self, _id: str, successful: bool, error: Optional[str] = None, full_error : Optional[str] = None) -> bool:
         result = self.collection.update_one({"_id": ObjectId(_id)}, {"$set": {"successful": successful, "error": error, "full_error": full_error}})
+        return result.modified_count > 0

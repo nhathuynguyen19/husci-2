@@ -1,6 +1,6 @@
 from bson import ObjectId
 from pymongo.database import Database
-from typing import Optional
+from typing import Optional, List
 
 
 class StudentRepository:
@@ -9,6 +9,9 @@ class StudentRepository:
 
     def find_by_id(self, student_id: str) -> Optional[dict]:
         return self.collection.find_one({"student_id": student_id})
+
+    def find_by_status(self, status : bool = True) -> Optional[List[dict]]:
+        return list(self.collection.find({"status": status}))
 
     def create(self, data: dict) -> str:
         data.pop("_id")
