@@ -1,5 +1,5 @@
 
-testing = False
+testing = True
 
 keyword_noti = [
     "thông-báo", "thong-bao", "thông_báo", "thong_bao", "thongbao", "thôngbáo",

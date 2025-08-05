@@ -1,10 +1,17 @@
+import asyncio
+import os
 import threading
+from os import system
 
 import discord.errors
+import uvicorn
+from discord.ext import commands, tasks
 from dotenv import load_dotenv
-import asyncio
-from os import system
+from fastapi import FastAPI
+
 from modules.api_crawler import APICrawler
+from modules.commands import Commands
+from modules.watch import watch_stream
 from services.announcement_service import AnnouncementService
 from services.cookies_service import CookiesService
 from services.member_service import MemberService
@@ -12,13 +19,7 @@ from services.request_service import RequestService
 from services.student_service import StudentService
 from services.study_history_service import StudyHistoryService
 from utils.discordInit import DiscordBot
-from modules.watch import watch_stream
-from discord.ext import commands, tasks
-from fastapi import FastAPI
-import uvicorn
 from utils.followup_send import FollowUpSend
-import os
-from modules.commands import Commands
 from utils.globals import testing
 from utils.http import HTTPHandler
 
@@ -79,8 +80,9 @@ async def scores(ctx):
 
 @tasks.loop(seconds=time_loop)
 async def crawler_loop():
-    await announcement_service.compare_announcements()
-    await api_crawler.student_loop()
+    print("crawler loop")
+    # await announcement_service.compare_announcements()
+    # await api_crawler.student_loop()
 
 
 def bg_thread_1():
@@ -105,12 +107,10 @@ async def start_fastapi():
     await server.serve()
 
 async def main():
-
     await asyncio.gather(
         start_discord(),
         start_fastapi()
     )
-
 
 @bot.event
 async def on_ready():

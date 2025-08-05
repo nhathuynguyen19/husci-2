@@ -5,7 +5,6 @@ from repositories.announcement_repo import AnnouncementRepository
 from models.announcement import Announcement, AnnouncementInput
 from typing import List, Optional
 from utils.mongo import database_primary, database_secondary
-import traceback
 from utils.globals import testing
 
 class AnnouncementService:
