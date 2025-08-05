@@ -58,25 +58,22 @@ commands_discord_bot = Commands(announcement_service=announcement_service,
 @app.head("/")
 async def root():
     return {"status": "running"}
-@app.get("/")
-async def get_root():
-    return {"status": "running"}
 #
-# @bot.tree.command(name="new", description="Thông báo mới nhất")
-# async def new(ctx) -> None:
-#     await commands_discord_bot.new_noti(ctx)
+@bot.tree.command(name="new", description="Thông báo mới nhất")
+async def new(ctx) -> None:
+    await commands_discord_bot.new_noti(ctx)
 #
-# @bot.tree.command(name="login", description="Đăng nhập")
-# async def login(ctx, student_id: str, password: str):
-#     await commands_discord_bot.login(ctx, student_id, password)
+@bot.tree.command(name="login", description="Đăng nhập")
+async def login(ctx, student_id: str, password: str):
+    await commands_discord_bot.login(ctx, student_id, password)
 #
-# @bot.tree.command(name="logout", description="Đăng xuất")
-# async def logout(ctx):
-#     await commands_discord_bot.logout(ctx)
+@bot.tree.command(name="logout", description="Đăng xuất")
+async def logout(ctx):
+    await commands_discord_bot.logout(ctx)
 #
-# @bot.tree.command(name="scores", description="Lịch sử quá trình học tập")
-# async def scores(ctx):
-#     await commands_discord_bot.scores(ctx)
+@bot.tree.command(name="scores", description="Lịch sử quá trình học tập")
+async def scores(ctx):
+    await commands_discord_bot.scores(ctx)
 #
 # @tasks.loop(seconds=time_loop)
 # async def crawler_loop():
@@ -112,17 +109,17 @@ async def main():
         start_fastapi()
     )
 #
-# @bot.event
-# async def on_ready():
-#     print(f"[BOT] Ready as {bot.user}")
-#     if not getattr(bot, "synced", False):
-#         await bot.tree.sync()
-#         bot.synced = True
-#     bg_thread_1()
-#     bg_thread_2()
-#     await asyncio.sleep(time_sleep)
-#     crawler_loop.start()
-#     print("crawl loops started")
+@bot.event
+async def on_ready():
+    print(f"[BOT] Ready as {bot.user}")
+    if not getattr(bot, "synced", False):
+        await bot.tree.sync()
+        bot.synced = True
+    # bg_thread_1()
+    # bg_thread_2()
+    # await asyncio.sleep(time_sleep)
+    # crawler_loop.start()
+    print("crawl loops started")
 #
 if __name__ == "__main__":
     asyncio.run(main())
