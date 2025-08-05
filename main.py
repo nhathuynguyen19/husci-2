@@ -112,7 +112,7 @@ async def start_discord():
 #
 #
 async def start_fastapi():
-    config = uvicorn.Config(app, host="0.0.0.0", port=int(os.environ.get("PORT", 10000)), log_level="info")
+    config = uvicorn.Config(app, host="0.0.0.0", port=int(os.environ.get("PORT", 10000)), log_level="info", loop="asyncio")
     server = uvicorn.Server(config)
     await server.serve()
 #
