@@ -61,67 +61,68 @@ async def root():
 @app.get("/")
 async def get_root():
     return {"status": "running"}
-
-@bot.tree.command(name="new", description="Thông báo mới nhất")
-async def new(ctx) -> None:
-    await commands_discord_bot.new_noti(ctx)
-
-@bot.tree.command(name="login", description="Đăng nhập")
-async def login(ctx, student_id: str, password: str):
-    await commands_discord_bot.login(ctx, student_id, password)
-
-@bot.tree.command(name="logout", description="Đăng xuất")
-async def logout(ctx):
-    await commands_discord_bot.logout(ctx)
-
-@bot.tree.command(name="scores", description="Lịch sử quá trình học tập")
-async def scores(ctx):
-    await commands_discord_bot.scores(ctx)
-
-@tasks.loop(seconds=time_loop)
-async def crawler_loop():
-    await announcement_service.compare_announcements()
-    await api_crawler.student_loop()
-
-
-def bg_thread_1():
-    thread = threading.Thread(target=watch_stream.watch_announcement_change, args=(bot, announcement_service, ), daemon=True)
-    thread.start()
-
-def bg_thread_2():
-    thread = threading.Thread(target=watch_stream.watch_study_history_change, args=(bot, study_history_service, member_service, ), daemon=True)
-    thread.start()
-
+#
+# @bot.tree.command(name="new", description="Thông báo mới nhất")
+# async def new(ctx) -> None:
+#     await commands_discord_bot.new_noti(ctx)
+#
+# @bot.tree.command(name="login", description="Đăng nhập")
+# async def login(ctx, student_id: str, password: str):
+#     await commands_discord_bot.login(ctx, student_id, password)
+#
+# @bot.tree.command(name="logout", description="Đăng xuất")
+# async def logout(ctx):
+#     await commands_discord_bot.logout(ctx)
+#
+# @bot.tree.command(name="scores", description="Lịch sử quá trình học tập")
+# async def scores(ctx):
+#     await commands_discord_bot.scores(ctx)
+#
+# @tasks.loop(seconds=time_loop)
+# async def crawler_loop():
+#     await announcement_service.compare_announcements()
+#     await api_crawler.student_loop()
+#
+#
+# def bg_thread_1():
+#     thread = threading.Thread(target=watch_stream.watch_announcement_change, args=(bot, announcement_service, ), daemon=True)
+#     thread.start()
+#
+# def bg_thread_2():
+#     thread = threading.Thread(target=watch_stream.watch_study_history_change, args=(bot, study_history_service, member_service, ), daemon=True)
+#     thread.start()
+#
 async def start_discord():
     try:
-        await bot.start(discord_bot.discord_token)
+        print("t")
+        # await bot.start(discord_bot.discord_token)
     except discord.errors.HTTPException:
         print("\n\n\nBLOCKED BY RATE LIMITS\nRESTARTING NOW\n\n\n")
         system('kill 1')
-
-
+#
+#
 async def start_fastapi():
     config = uvicorn.Config(app, host="0.0.0.0", port=int(os.environ.get("PORT", 10000)), log_level="info")
     server = uvicorn.Server(config)
     await server.serve()
-
+#
 async def main():
     await asyncio.gather(
         start_discord(),
         start_fastapi()
     )
-
-@bot.event
-async def on_ready():
-    print(f"[BOT] Ready as {bot.user}")
-    if not getattr(bot, "synced", False):
-        await bot.tree.sync()
-        bot.synced = True
-    # bg_thread_1()
-    # bg_thread_2()
-    await asyncio.sleep(time_sleep)
-    crawler_loop.start()
-    print("crawl loops started")
-
+#
+# @bot.event
+# async def on_ready():
+#     print(f"[BOT] Ready as {bot.user}")
+#     if not getattr(bot, "synced", False):
+#         await bot.tree.sync()
+#         bot.synced = True
+#     bg_thread_1()
+#     bg_thread_2()
+#     await asyncio.sleep(time_sleep)
+#     crawler_loop.start()
+#     print("crawl loops started")
+#
 if __name__ == "__main__":
     asyncio.run(main())
