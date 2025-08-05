@@ -92,7 +92,7 @@ async def scores(ctx):
 async def start_discord():
     try:
         print("t")
-        # await bot.start(discord_bot.discord_token)
+        await bot.start(discord_bot.discord_token)
     except discord.errors.HTTPException:
         print("\n\n\nBLOCKED BY RATE LIMITS\nRESTARTING NOW\n\n\n")
         system('kill 1')
@@ -119,7 +119,7 @@ async def on_ready():
     # bg_thread_2()
     # await asyncio.sleep(time_sleep)
     # crawler_loop.start()
-    print("crawl loops started")
+    # print("crawl loops started")
 #
 if __name__ == "__main__":
     asyncio.run(main())
