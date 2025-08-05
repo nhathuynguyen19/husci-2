@@ -4,6 +4,7 @@ import threading
 from os import system
 
 import discord.errors
+asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
 import uvicorn
 from discord.ext import commands, tasks
 from dotenv import load_dotenv
@@ -112,7 +113,13 @@ async def start_discord():
 #
 #
 async def start_fastapi():
-    config = uvicorn.Config(app, host="0.0.0.0", port=int(os.environ.get("PORT", 10000)), log_level="info", loop="asyncio")
+    config = uvicorn.Config(app,
+                            host="0.0.0.0",
+                            port=int(os.environ.get("PORT", 10000)),
+                            log_level="info",
+                            loop="asyncio",
+                            workers=1
+                            )
     server = uvicorn.Server(config)
     await server.serve()
 #
