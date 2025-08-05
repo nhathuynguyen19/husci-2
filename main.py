@@ -54,8 +54,11 @@ commands_discord_bot = Commands(announcement_service=announcement_service,
                                 cookies_service=cookies_service)
 
 
-@app.get("/")
+@app.head("/")
 async def root():
+    return {"status": "running"}
+@app.get("/")
+async def get_root():
     return {"status": "running"}
 
 @bot.tree.command(name="new", description="Thông báo mới nhất")
