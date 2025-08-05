@@ -80,10 +80,13 @@ try:
         await api_crawler.student_loop()
 
 
-    async def start_background_tasks():
-        loop = asyncio.get_event_loop()
-        loop.run_in_executor(None, watch_stream.watch_announcement_change, bot, announcement_service)
-        loop.run_in_executor(None, watch_stream.watch_study_history_change, bot, study_history_service, member_service)
+    def bg_thread_1():
+        thread = threading.Thread(target=watch_stream.watch_announcement_change, args=(bot, announcement_service, ), daemon=True)
+        thread.start()
+
+    def bg_thread_2():
+        thread = threading.Thread(target=watch_stream.watch_study_history_change, args=(bot, study_history_service, member_service, ), daemon=True)
+        thread.start()
 
     async def start_discord():
         await bot.start(discord_bot.discord_token)
@@ -107,8 +110,9 @@ try:
         if not getattr(bot, "synced", False):
             await bot.tree.sync()
             bot.synced = True
-        await start_background_tasks()
-        await asyncio.sleep(10)
+        bg_thread_1()
+        bg_thread_2()
+        await asyncio.sleep(time_sleep)
         crawler_loop.start()
         print("crawl loops started")
 

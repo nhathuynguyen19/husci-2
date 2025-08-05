@@ -1,3 +1,4 @@
+import asyncio
 
 from models.student import Student
 from typing import List, Optional
@@ -89,9 +90,11 @@ class APICrawler:
 
     async def student_loop(self):
         try:
+            tasks = []
             for student in self.student_service.get_by_status():
                 cookies = self.cookies_service.get_by_id(str(student.get("cookies_id")))
-                await self.compare_study_history(student=Student.from_dict(student), cookies=cookies)
+                tasks.append(self.compare_study_history(student=Student.from_dict(student), cookies=cookies))
+            await asyncio.gather(*tasks)
         except Exception as e:
             import traceback
             print(repr(e))
