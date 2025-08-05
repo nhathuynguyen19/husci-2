@@ -4,6 +4,8 @@ import threading
 from os import system
 
 import discord.errors
+from aiohttp import web
+
 asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
 import uvicorn
 from discord.ext import commands, tasks
@@ -104,9 +106,30 @@ async def scores(ctx):
 #         await bot.close()
 #         raise
 # #
-# async def main():
-#     bot.run(discord_token)
+async def main():
+    await asyncio.gather(
+        start_aiohttp(),
+        start_discord()
+    )
+
+async def head_handler(request):
+    return web.Response(status=200)
 #
+async def start_aiohttp():
+    app = web.Application()
+    app.router.add_head("/", head_handler)
+
+    runner = web.AppRunner(app)
+    await runner.setup()
+    port = int(os.environ.get("PORT", 10000))
+    site = web.TCPSite(runner, host="0.0.0.0", port=port)
+    await site.start()
+
+    print(f"✅ aiohttp server running at http://0.0.0.0:{port}")
+
+async def start_discord():
+    await bot.start(discord_token)
+
 @bot.event
 async def on_ready():
     print(f"[BOT] Ready as {bot.user}")
@@ -120,4 +143,5 @@ async def on_ready():
     # print("crawl loops started")
 #
 if __name__ == "__main__":
-    bot.run(discord_token)
+    asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
+    asyncio.run(main())

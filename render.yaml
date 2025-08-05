@@ -3,4 +3,4 @@ services:
     name: husci
     runtime: python
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "main_bot.py./start.sh"
+    startCommand: "python3 main.py"
