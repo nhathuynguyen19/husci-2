@@ -8,7 +8,6 @@ asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
 import uvicorn
 from discord.ext import commands, tasks
 from dotenv import load_dotenv
-from fastapi import FastAPI
 
 from modules.api_crawler import APICrawler
 from modules.commands import Commands
@@ -24,10 +23,10 @@ from utils.followup_send import FollowUpSend
 from utils.globals import testing
 from utils.http import HTTPHandler
 
-app = FastAPI()
 time_loop = None
 time_sleep = None
 discord_token = None
+load_dotenv()
 if testing:
     time_loop = 10
     time_sleep = 2
@@ -36,7 +35,6 @@ else:
     time_loop = 10 * 60
     time_sleep = 15
     discord_token = os.getenv("DISCORD_TOKEN_PRIMARY")
-load_dotenv()
 bot: commands.Bot = create_bot()
 followup_messages = FollowUpSend()
 announcement_service = AnnouncementService()
@@ -56,11 +54,6 @@ commands_discord_bot = Commands(announcement_service=announcement_service,
                                 followup_messages=followup_messages,
                                 http_handler=http_handler,
                                 cookies_service=cookies_service)
-
-
-@app.head("/")
-async def root():
-    return {"status": "running"}
 #
 @bot.tree.command(name="new", description="Thông báo mới nhất")
 async def new(ctx) -> None:
@@ -111,23 +104,8 @@ async def start_discord():
         await bot.close()
         raise
 #
-#
-async def start_fastapi():
-    config = uvicorn.Config(app,
-                            host="0.0.0.0",
-                            port=int(os.environ.get("PORT", 10000)),
-                            log_level="info",
-                            loop="asyncio",
-                            workers=1
-                            )
-    server = uvicorn.Server(config)
-    await server.serve()
-#
 async def main():
-    await asyncio.gather(
-        start_discord(),
-        start_fastapi()
-    )
+    await start_discord()
 #
 @bot.event
 async def on_ready():
@@ -142,4 +120,5 @@ async def on_ready():
     # print("crawl loops started")
 #
 if __name__ == "__main__":
+    asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
     asyncio.run(main())
