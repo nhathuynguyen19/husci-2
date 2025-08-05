@@ -1,7 +1,9 @@
 import threading
+
+import discord.errors
 from dotenv import load_dotenv
 import asyncio
-
+from os import system
 from modules.api_crawler import APICrawler
 from services.announcement_service import AnnouncementService
 from services.cookies_service import CookiesService
@@ -89,7 +91,12 @@ try:
         thread.start()
 
     async def start_discord():
-        await bot.start(discord_bot.discord_token)
+        try:
+            await bot.start(discord_bot.discord_token)
+        except discord.errors.HTTPException:
+            print("\n\n\nBLOCKED BY RATE LIMITS\nRESTARTING NOW\n\n\n")
+            system('kill 1')
+
 
     async def start_fastapi():
         config = uvicorn.Config(app, host="0.0.0.0", port=int(os.environ.get("PORT", 10000)), log_level="info")
