@@ -2,16 +2,33 @@ from typing import Optional
 
 from bson import ObjectId
 
-from models.student import Student
-from request_repo.cookies_repo import CookiesRepository
+from repositories.cookies_repo import CookiesRepository
 from utils.mongo import database_primary, database_secondary
 from utils.globals import testing
 class CookiesService:
     def __init__(self):
-        if not testing:
-            self.repo = CookiesRepository(database_primary)
-        else:
-            self.repo = CookiesRepository(database_secondary)
+        try:
+            if not testing:
+                self.repo = CookiesRepository(database_primary)
+            else:
+                self.repo = CookiesRepository(database_secondary)
+        except Exception as e:
+            import traceback
+            print(repr(e))
+            traceback.print_exc()
 
     def create(self, data: dict) -> Optional[ObjectId]:
-        return self.repo.create(data)
+        try:
+            return self.repo.create(data)
+        except Exception as e:
+            import traceback
+            print(repr(e))
+            traceback.print_exc()
+
+    def get_by_id(self, _id: str) -> Optional[dict]:
+        try:
+            return self.repo.find_by_id(_id)
+        except Exception as e:
+            import traceback
+            print(repr(e))
+            traceback.print_exc()
