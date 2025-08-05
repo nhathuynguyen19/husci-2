@@ -91,11 +91,22 @@ async def scores(ctx):
 #
 async def start_discord():
     try:
-        print("t")
+        print("⏳ Starting Discord bot...")
         await bot.start(discord_bot.discord_token)
-    except discord.errors.HTTPException:
-        print("\n\n\nBLOCKED BY RATE LIMITS\nRESTARTING NOW\n\n\n")
-        system('kill 1')
+
+    except discord.errors.HTTPException as e:
+        print("🚫 HTTPException:", e)
+        if e.status == 429:  # Rate limit
+            print("🔁 BLOCKED BY RATE LIMITS — Restarting...")
+            await bot.close()  # Đóng bot để giải phóng resource
+            os.system('kill 1')  # Chỉ dùng nếu đang chạy trong Docker
+        else:
+            raise
+
+    except Exception as e:
+        print("🔥 Unhandled exception:", e)
+        await bot.close()
+        raise
 #
 #
 async def start_fastapi():
