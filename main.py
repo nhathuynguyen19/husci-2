@@ -103,6 +103,7 @@ async def check_run_time():
         print(f"Within run window: {h}:{m:02d}, continue running")
         await asyncio.sleep(3600)
         logging.info('main: Exitting Application')
+    logging.info("main: Exiting Application")
     os._exit(0)
 
 def bg_thread_1():
