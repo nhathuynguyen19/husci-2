@@ -36,7 +36,7 @@ if testing:
     time_sleep = 2
     discord_token = os.environ["DISCORD_TOKEN_SECONDARY"]
 else:
-    time_loop = 10 * 60
+    time_loop = 3 * 60
     time_sleep = 15
     discord_token = os.environ["DISCORD_TOKEN_PRIMARY"]
 load_dotenv()
@@ -133,6 +133,9 @@ async def on_ready():
     bg_thread_2()
     await asyncio.sleep(time_sleep)
     crawler_loop.start()
+    await asyncio.sleep(3600)
+    logging.info('main: Exitting Application')
+    os._exit(0)
 
 if __name__ == "__main__":
     asyncio.run(main())
