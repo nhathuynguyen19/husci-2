@@ -1,3 +1,4 @@
+import datetime
 import threading
 
 import discord.errors
@@ -90,6 +91,17 @@ async def crawler_loop():
     await announcement_service.compare_announcements()
     await api_crawler.student_loop()
 
+async def check_run_time():
+    now = datetime.datetime.utcnow() + datetime.timedelta(hours=7)  # giờ VN
+    h = now.hour
+    m = now.minute
+    # Khung giờ chạy: 6:00-6:59, 12:00-12:59, 16:00-16:59
+    if not ((h == 6) or (h == 12) or (h == 16)):
+        print(f"Outside run window: {h}:{m:02d}, sleeping 3 mins then exit")
+        await asyncio.sleep(180)
+        os._exit(0)
+    else:
+        print(f"Within run window: {h}:{m:02d}, continue running")
 
 def bg_thread_1():
     logging.info("Background thread watch_announcement_change: Starting")
@@ -133,6 +145,7 @@ async def on_ready():
     bg_thread_2()
     await asyncio.sleep(time_sleep)
     crawler_loop.start()
+    await check_run_time()
     await asyncio.sleep(3600)
     logging.info('main: Exitting Application')
     os._exit(0)
