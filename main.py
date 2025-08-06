@@ -21,7 +21,12 @@ import os
 from modules.commands import Commands
 from utils.globals import testing
 from utils.http import HTTPHandler
+import time
+import logging
+
 load_dotenv()
+format_logging = '%(asctime)s: %(message)s'
+logging.basicConfig(format=format_logging, level=logging.INFO, datefmt="%H:%M:%S")
 app = FastAPI()
 time_loop = None
 time_sleep = None
@@ -81,20 +86,24 @@ async def scores(ctx):
 
 @tasks.loop(seconds=time_loop)
 async def crawler_loop():
+    logging.info("crawler_loop: Starting")
     await announcement_service.compare_announcements()
     await api_crawler.student_loop()
 
 
 def bg_thread_1():
+    logging.info("Background thread watch_announcement_change: Starting")
     thread = threading.Thread(target=watch_stream.watch_announcement_change, args=(bot, announcement_service, ), daemon=True)
     thread.start()
 
 def bg_thread_2():
+    logging.info("Background thread watch_study_history_change: Starting")
     thread = threading.Thread(target=watch_stream.watch_study_history_change, args=(bot, study_history_service, member_service, ), daemon=True)
     thread.start()
 
 async def start_discord():
     try:
+        logging.info("start_discord: Starting")
         await bot.start(discord_token)
     except discord.errors.HTTPException:
         print("\n\n\nBLOCKED BY RATE LIMITS\nRESTARTING NOW\n\n\n")
@@ -102,29 +111,28 @@ async def start_discord():
 
 
 async def start_fastapi():
-    config = uvicorn.Config(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)), log_level="info", workers=1, loop="asyncio")
+    logging.info("start_fastapi: Starting")
+    config = uvicorn.Config(app, host="0.0.0.0", port=int(os.environ.get("PORT", 10000)), log_level="info", workers=1, loop="asyncio")
     server = uvicorn.Server(config)
     await server.serve()
 
 async def main():
-
+    logging.info('main: Starting')
     await asyncio.gather(
-        start_discord(),
-        start_fastapi()
+        start_fastapi(),
+        start_discord()
     )
-
 
 @bot.event
 async def on_ready():
-    print(f"[BOT] Ready as {bot.user}")
     if not getattr(bot, "synced", False):
         await bot.tree.sync()
         bot.synced = True
+    logging.info(f'[BOT]: Ready at {bot.user}')
     bg_thread_1()
     bg_thread_2()
     await asyncio.sleep(time_sleep)
     crawler_loop.start()
-    print("crawl loops started")
 
 if __name__ == "__main__":
     asyncio.run(main())
