@@ -36,7 +36,7 @@ if testing:
     time_sleep = 2
     discord_token = os.environ["DISCORD_TOKEN_SECONDARY"]
 else:
-    time_loop = 10 * 60
+    time_loop = 3 * 60
     time_sleep = 15
     discord_token = os.environ["DISCORD_TOKEN_PRIMARY"]
 load_dotenv()
