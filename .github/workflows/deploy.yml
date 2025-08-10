@@ -15,4 +15,4 @@ jobs:
           curl -X POST https://backboard.railway.com/graphql/v2 \
           -H "Authorization: Bearer ${{ secrets.RAILWAY_API_KEY }}" \
           -H "Content-Type: application/json" \
-          -d '{"query":"mutation { deploymentCreate(input: { projectId: \"8a829f06-aee3-438c-85b2-303a6ef7e030\" }) { id } }"}'
+          -d '{"query":"mutation ServiceInstanceRedeploy {serviceInstanceRedeploy(environmentId: \"328c3b6a-716a-4894-8cff-4de0c3365782\" serviceId: \"65293123-b9f0-41b4-b84d-36f246496079\")}"}'
