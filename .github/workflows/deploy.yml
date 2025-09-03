@@ -2,9 +2,9 @@ name: Scheduled Bot Deployment
 
 on:
   schedule:
-    - cron: '42 22 * * *'
-    - cron: '42 4 * * *'
-    - cron: '42 8 * * *'
+    - cron: '52 22 * * *'
+    - cron: '52 4 * * *'
+    - cron: '52 8 * * *'
 
 jobs:
   deploy:
